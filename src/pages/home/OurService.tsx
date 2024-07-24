@@ -5,7 +5,7 @@ import { IoMdGift } from "react-icons/io";
 
 const OurService = () => {
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 mx-10 gap-y-5 gap-x-10">
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 mx-10 gap-y-5 my-20 gap-x-10">
       <div className="text-left md:text-center lg:text-center flex flex-row md:flex-col lg:flex-col items-center space-x-3 shadow-md rounded-md p-3 space-y-2">
         <div className="flex justify-center">
           <BiSupport className="text-4xl font-bold text-[#228B22]"></BiSupport>

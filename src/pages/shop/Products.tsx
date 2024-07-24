@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useGetAllProductQuery } from "../../redux/Product/ProductAPI";
 import { Link } from "react-router-dom";
 
@@ -16,8 +16,8 @@ type TProduct = {
 };
 
 const Products = () => {
-  const [priceFilter, setPriceFilter] = useState(["sort", "price"]);
-  const [priceBtn, setPriceBtn] = useState("HTL");
+  const [priceFilter, setPriceFilter] = useState(["sort", "createdAt"]);
+  // const [priceBtn, setPriceBtn] = useState("HTL");
   const { data, isLoading } = useGetAllProductQuery(priceFilter);
 
   if (isLoading) {
@@ -42,19 +42,43 @@ const Products = () => {
     );
   }
   console.log(data.data);
+
+  const handleMinMax = (e : any) => {
+    const minValue = e.currentTarget.minimum.value
+    const maxValue = e.currentTarget.maximum.value
+    console.log(minValue, maxValue)
+  }
+
   return (
     <div className="m-5 flex gap-x-5">
-      <div className="w-1/4 border rounded-lg">
-        <h1 className="text-2xl font-bold text-center">Filter</h1>
+      <div className="w-1/4 border rounded-lg px-2 py-5">
+        <h1 className="text-2xl font-bold text-center ">Filter</h1>
         <div className=" mx-3">
-          <p className="text-lg font-semibold my-2">Price</p>
-          <details className="dropdown">
-            <summary className="btn m-1">Filter</summary>
+          <details className="dropdown w-full">
+            <summary className="btn m-1 w-full">Filter By</summary>
             <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] md:w-36 lg:w-64 p-2 shadow">
+              <li className="mb-2 border rounded-lg selected">
+                <button
+                  onClick={() => {
+                    setPriceFilter(["sort", "name"]);
+                  }}
+                >
+                  A To Z
+                </button>
+              </li>
               <li className="mb-2 border rounded-lg">
                 <button
                   onClick={() => {
-                    setPriceBtn("HTL"), setPriceFilter(["sort", "price"]);
+                    setPriceFilter(["sort", "-name"]);
+                  }}
+                >
+                  Z To A
+                </button>
+              </li>
+              <li className="mb-2 border rounded-lg">
+                <button
+                  onClick={() => {
+                    setPriceFilter(["sort", "-price"]);
                   }}
                 >
                   High to Low
@@ -63,7 +87,7 @@ const Products = () => {
               <li className="mb-2 border rounded-lg">
                 <button
                   onClick={() => {
-                    setPriceBtn("LTH"), setPriceFilter(["sort", "-price"]);
+                    setPriceFilter(["sort", "price"]);
                   }}
                 >
                   Low to High
@@ -71,6 +95,13 @@ const Products = () => {
               </li>
             </ul>
           </details>
+        </div>
+        <div>
+          <form action="" onChange={handleMinMax} className="space-x-1 flex justify-center">
+            <input type="number" className="px-4 w-36 md:w-32 lg:w-32 outline-none py-2 border-2 focus:border-blue-400 rounded-lg text-slate-500" placeholder="min" name="minimum"/>
+            <input type="number" className="px-4 w-36 md:w-32 lg:w-32 outline-none py-2 border-2 focus:border-blue-400 rounded-lg text-slate-500" placeholder="max" name="maximum"/>
+            {/* <input type="submit" className="btn w-20 bg-blue-500 text-center text-white hover:text-black" name="" id="" /> */}
+          </form>
         </div>
       </div>
       <div className="w-3/4 grid md:grid-cols-2 lg:grid-cols-3 gap-5 ">
