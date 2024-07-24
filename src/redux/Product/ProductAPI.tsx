@@ -4,12 +4,9 @@ const academicSemesterApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProduct: builder.query({
       query: (priority) => {
-        // const key = Object.keys(priority)
-        // const value = Object.values(priority)
         const params = new URLSearchParams()
-        // console.log(key , value);
         if(priority){
-          params.append('sort' , priority)
+          params.append(priority[0] , priority[1])
         }
         
         return {
