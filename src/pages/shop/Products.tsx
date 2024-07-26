@@ -21,12 +21,15 @@ type TFilter = {
   maxValue?: string;
   minValue?: string;
   category?: string;
+  page?: number;
+  limit?: number;
 };
 
 const Products = () => {
   const [sortFelid, setSortFelid] = useState<TFilter>({});
   const { data, isLoading } = useGetAllProductQuery(sortFelid);
-  // const { data : data2, isLoading : isLoading2 } = usePriceFilterProductQuery(priceFilter);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemPerPage, setItemPerPage] = useState(10);
 
   if (isLoading) {
     return (
@@ -35,6 +38,13 @@ const Products = () => {
       </div>
     );
   }
+  if (!data) {
+    return <h1>Not found</h1>;
+  }
+  console.log(data.data);
+  const numberOfPage = Math.ceil(Number(data?.data?.length + 50) / itemPerPage);
+
+  const pages = [...Array(numberOfPage).keys()];
 
   const handleMinMax = (e: any) => {
     e.preventDefault();
@@ -54,6 +64,27 @@ const Products = () => {
     });
   };
 
+  const handleNextPrePage = (btn: string) => {
+    if (btn === "next") {
+      if (currentPage < numberOfPage) {
+        setCurrentPage(currentPage + 1);
+        setSortFelid({ page: currentPage + 1, limit: itemPerPage });
+      }
+    }
+    if (btn === "pervious") {
+      if(currentPage > 1){
+        setCurrentPage(currentPage - 1);
+        setSortFelid({ page: currentPage - 1, limit: itemPerPage });
+      }
+    }
+  };
+
+  const handlePagination = (currentPage: number) => {
+    setCurrentPage(currentPage as number);
+    setSortFelid({ page: currentPage , limit: itemPerPage });
+  };
+  console.log("currentPage : ", currentPage, "numberOfPage :", numberOfPage);
+  console.log(sortFelid);
   return (
     <div className="m-5 ">
       <button
@@ -413,6 +444,40 @@ const Products = () => {
             ))}
           </div>
         )}
+      </div>
+      <div className="my-10">
+        <div className="flex flex-wrap justify-center items-center gap-2">
+          <button onClick={() => handleNextPrePage("pervious")} className="btn">
+            Previous
+          </button>
+          {pages.map((page) => (
+            <button
+              onClick={() => handlePagination(page+1)}
+              key={page}
+              className={`btn ${
+                page + 1 === currentPage && "bg-[#8FBC8F] text-white"
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+          <button className="btn" onClick={() => handleNextPrePage("next")}>
+            Next
+          </button>
+          <p className="text-lg font-medium ml-5 text-[#8FBC8F]">
+            Page pre view
+          </p>
+          <select
+            className="w-20 border p-2 rounded"
+            defaultValue={itemPerPage}
+            onChange={(e) => {setItemPerPage(parseInt(e.target.value)), setCurrentPage(1), setSortFelid({ page: 1 , limit: itemPerPage })}}
+            name=""
+            id=""
+          >
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+        </div>
       </div>
     </div>
   );

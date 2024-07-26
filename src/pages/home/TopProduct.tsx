@@ -22,7 +22,7 @@ const TopProduct = () => {
   const [productItem, setProductItem] = useState("featured");
   const [params, setParams] = useState({sort : 'createdAt'});
   const { data, isLoading } = useGetAllProductQuery(params);
-  // console.table(data?.data);
+
   if (isLoading) {
     return (
       <div className="flex justify-center my-20">
@@ -33,6 +33,7 @@ const TopProduct = () => {
   if (!data) {
     return <h1>Not found</h1>;
   }
+
   return (
     <div className="mb-10">
       <div>
