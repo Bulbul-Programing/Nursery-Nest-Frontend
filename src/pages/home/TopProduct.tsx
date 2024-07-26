@@ -20,7 +20,7 @@ type TProduct = {
 
 const TopProduct = () => {
   const [productItem, setProductItem] = useState("featured");
-  const [params, setParams] = useState(['sort', 'createdAt']);
+  const [params, setParams] = useState({sort : 'createdAt'});
   const { data, isLoading } = useGetAllProductQuery(params);
   // console.table(data?.data);
   if (isLoading) {
@@ -40,7 +40,7 @@ const TopProduct = () => {
         <div className="flex justify-center gap-x-10 mt-5">
           <h1
             onClick={() => {
-              setProductItem("featured"), setParams(['sort', 'createdAt']);
+              setProductItem("featured"), setParams({sort : 'createdAt'});
             }}
             className={`text-2xl ${
               productItem === "featured" && "bg-[#228B22] text-white"
@@ -50,7 +50,7 @@ const TopProduct = () => {
           </h1>
           <h1
             onClick={() => {
-              setProductItem("latest"), setParams(['sort', '-createdAt']);
+              setProductItem("latest"), setParams({sort : '-createdAt'});
             }}
             className={`text-2xl ${
               productItem === "latest" && "bg-[#228B22] text-white"
