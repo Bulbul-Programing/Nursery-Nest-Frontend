@@ -3,10 +3,12 @@ import "./navbar.css";
 import { FaCartArrowDown } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { useState } from "react";
+import { useAppSelector } from "../redux/hooks";
+import { RootState } from "@/redux/store";
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
-  
+  const cartItems = useAppSelector((state: RootState) => state.addToCart.id);
   const modalEvent = document.getElementById("modal") as HTMLElement;
   const modalIcon = document.getElementById("modalIcon") as HTMLElement;
   const modalForm = document.getElementById("modalForm") as HTMLElement;
@@ -104,8 +106,8 @@ const Navbar = () => {
         </div>
         <div className="navbar-end w-[43%] md:w-1/2 lg:w-1/2">
           <IoSearch id="modalIcon" onClick={() => setModal(true)} className="text-3xl mr-3 cursor-pointer" />
-          <button className="btn bg-[#8FBC8F] text-white">
-            <FaCartArrowDown className="text-xl" />0 items
+          <button className="btn bg-[#8FBC8F] hover:bg-[#639c63] text-white">
+            <FaCartArrowDown className="text-xl" />{cartItems.length} items
           </button>
         </div>
       </div>

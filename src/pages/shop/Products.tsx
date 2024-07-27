@@ -38,9 +38,9 @@ const Products = () => {
   const [itemPerPage, setItemPerPage] = useState(10);
   const [sortFelid, setSortFelid] = useState<TFilter>({ page: 1, limit: 10 });
   const { data, isLoading } = useGetAllProductQuery(sortFelid);
-  const { data: productCount, isLoading: isLoading2 } =useProductCountQuery(undefined);
-  const cartItems = useAppSelector((state:RootState)=>state.addToCart.id)
-  const dispatch = useAppDispatch()
+  const { data: productCount, isLoading: isLoading2 } =
+    useProductCountQuery(undefined);
+  const dispatch = useAppDispatch();
 
   if (isLoading || isLoading2) {
     return (
@@ -65,7 +65,7 @@ const Products = () => {
       </div>
     );
   }
-  console.log(cartItems);
+
   const numberOfPage = Math.ceil(Number(productCount?.data) / itemPerPage);
   const pages = [...Array(numberOfPage).keys()];
 
@@ -85,20 +85,28 @@ const Products = () => {
       minValue: minValue,
       maxValue: maxValue,
     });
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
   const handleNextPrePage = (btn: string) => {
     if (btn === "next") {
       if (currentPage < numberOfPage) {
         setCurrentPage(currentPage + 1);
-        setSortFelid({...sortFelid, page: currentPage + 1, limit: itemPerPage });
+        setSortFelid({
+          ...sortFelid,
+          page: currentPage + 1,
+          limit: itemPerPage,
+        });
       }
     }
     if (btn === "pervious") {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
-        setSortFelid({...sortFelid, page: currentPage - 1, limit: itemPerPage });
+        setSortFelid({
+          ...sortFelid,
+          page: currentPage - 1,
+          limit: itemPerPage,
+        });
       }
     }
   };
@@ -110,14 +118,14 @@ const Products = () => {
 
   const handlePageViewContent = (e: any) => {
     setCurrentPage(1),
-      setSortFelid({...sortFelid, page: 1, limit: parseInt(e.target.value) });
+      setSortFelid({ ...sortFelid, page: 1, limit: parseInt(e.target.value) });
     setItemPerPage(parseInt(e.target.value));
   };
 
-  const handleAddToCart = (id : string) => {
-    dispatch(addToCart(id))
-  }
-  console.log(sortFelid);
+  const handleAddToCart = (id: string) => {
+    dispatch(addToCart(id));
+  };
+ 
   return (
     <div className="m-5 ">
       <button
@@ -478,7 +486,12 @@ const Products = () => {
                 </Link>
                 <div className="relative add-to-cart inset-0 text-white text-lg font-semibold hidden transition-opacity duration-300">
                   <div className="p-5 absolute bottom-0 w-full rounded-md bg-black bg-opacity-30">
-                    <button onClick={()=>handleAddToCart(item._id)} className="btn text-center border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full">Add To Cart</button>
+                    <button
+                      onClick={() => handleAddToCart(item._id)}
+                      className="btn text-center border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full"
+                    >
+                      Add To Cart
+                    </button>
                   </div>
                 </div>
               </div>
