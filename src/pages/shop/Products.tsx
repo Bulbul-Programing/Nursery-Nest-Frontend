@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useGetAllProductQuery } from "../../redux/Product/ProductAPI";
+import {
+  useGetAllProductQuery,
+  useProductCountQuery,
+} from "../../redux/Product/ProductAPI";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -23,15 +26,18 @@ type TFilter = {
   category?: string;
   page?: number;
   limit?: number;
+  fields?: string;
 };
 
 const Products = () => {
-  const [sortFelid, setSortFelid] = useState<TFilter>({});
-  const { data, isLoading } = useGetAllProductQuery(sortFelid);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(10);
+  const [sortFelid, setSortFelid] = useState<TFilter>({ page: 1, limit: 10 });
+  const { data, isLoading } = useGetAllProductQuery(sortFelid);
+  const { data: productCount, isLoading: isLoading2 } =
+    useProductCountQuery(undefined);
 
-  if (isLoading) {
+  if (isLoading || isLoading2) {
     return (
       <div className="flex justify-center my-20">
         <span className="loading loading-dots loading-lg"></span>
@@ -41,8 +47,8 @@ const Products = () => {
   if (!data) {
     return <h1>Not found</h1>;
   }
-  console.log(data.data);
-  const numberOfPage = Math.ceil(Number(data?.data?.length + 50) / itemPerPage);
+
+  const numberOfPage = Math.ceil(Number(productCount?.data) / itemPerPage);
 
   const pages = [...Array(numberOfPage).keys()];
 
@@ -72,7 +78,7 @@ const Products = () => {
       }
     }
     if (btn === "pervious") {
-      if(currentPage > 1){
+      if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
         setSortFelid({ page: currentPage - 1, limit: itemPerPage });
       }
@@ -81,9 +87,14 @@ const Products = () => {
 
   const handlePagination = (currentPage: number) => {
     setCurrentPage(currentPage as number);
-    setSortFelid({ page: currentPage , limit: itemPerPage });
+    setSortFelid({ page: currentPage, limit: itemPerPage });
   };
-  console.log("currentPage : ", currentPage, "numberOfPage :", numberOfPage);
+
+  const handlePageViewContent = (e: any) => {
+    setCurrentPage(1),
+    setSortFelid({ page: 1, limit: parseInt(e.target.value) });
+    setItemPerPage(parseInt(e.target.value));
+  };
   console.log(sortFelid);
   return (
     <div className="m-5 ">
@@ -452,10 +463,11 @@ const Products = () => {
           </button>
           {pages.map((page) => (
             <button
-              onClick={() => handlePagination(page+1)}
+              onClick={() => handlePagination(page + 1)}
               key={page}
               className={`btn ${
-                page + 1 === currentPage && "bg-[#8FBC8F] text-white"
+                page + 1 === currentPage &&
+                "bg-[#8FBC8F] hover:bg-[#689968] text-white"
               }`}
             >
               {page + 1}
@@ -464,19 +476,21 @@ const Products = () => {
           <button className="btn" onClick={() => handleNextPrePage("next")}>
             Next
           </button>
-          <p className="text-lg font-medium ml-5 text-[#8FBC8F]">
-            Page pre view
-          </p>
-          <select
-            className="w-20 border p-2 rounded"
-            defaultValue={itemPerPage}
-            onChange={(e) => {setItemPerPage(parseInt(e.target.value)), setCurrentPage(1), setSortFelid({ page: 1 , limit: itemPerPage })}}
-            name=""
-            id=""
-          >
-            <option value="10">10</option>
-            <option value="20">20</option>
-          </select>
+          <div className="flex items-center space-x-4">
+            <p className="text-lg font-medium ml-5 text-[#8FBC8F]">
+              Page pre view
+            </p>
+            <select
+              className="w-20 border p-2 rounded"
+              defaultValue={itemPerPage}
+              onChange={handlePageViewContent}
+              name=""
+              id=""
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
