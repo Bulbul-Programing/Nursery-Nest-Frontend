@@ -5,6 +5,10 @@ import {
 } from "../../redux/Product/ProductAPI";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import "./product.css";
+import { addToCart } from "../../redux/fetures/addToCartSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { RootState } from "@/redux/store";
 
 type TProduct = {
   _id: string;
@@ -34,8 +38,9 @@ const Products = () => {
   const [itemPerPage, setItemPerPage] = useState(10);
   const [sortFelid, setSortFelid] = useState<TFilter>({ page: 1, limit: 10 });
   const { data, isLoading } = useGetAllProductQuery(sortFelid);
-  const { data: productCount, isLoading: isLoading2 } =
-    useProductCountQuery(undefined);
+  const { data: productCount, isLoading: isLoading2 } =useProductCountQuery(undefined);
+  const cartItems = useAppSelector((state:RootState)=>state.addToCart.id)
+  const dispatch = useAppDispatch()
 
   if (isLoading || isLoading2) {
     return (
@@ -45,11 +50,23 @@ const Products = () => {
     );
   }
   if (!data) {
-    return <h1>Not found</h1>;
+    return (
+      <div className="flex justify-center my-10">
+        <div className="my-5">
+          <h1 className="text-4xl font-semibold text-center my-2">
+            No Data Found !
+          </h1>
+          <img
+            className="w-[500px] mx-auto "
+            src="https://i.ibb.co/74kjdxL/55024593-9264822.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+    );
   }
-
+  console.log(cartItems);
   const numberOfPage = Math.ceil(Number(productCount?.data) / itemPerPage);
-
   const pages = [...Array(numberOfPage).keys()];
 
   const handleMinMax = (e: any) => {
@@ -68,33 +85,38 @@ const Products = () => {
       minValue: minValue,
       maxValue: maxValue,
     });
+    setCurrentPage(1)
   };
 
   const handleNextPrePage = (btn: string) => {
     if (btn === "next") {
       if (currentPage < numberOfPage) {
         setCurrentPage(currentPage + 1);
-        setSortFelid({ page: currentPage + 1, limit: itemPerPage });
+        setSortFelid({...sortFelid, page: currentPage + 1, limit: itemPerPage });
       }
     }
     if (btn === "pervious") {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
-        setSortFelid({ page: currentPage - 1, limit: itemPerPage });
+        setSortFelid({...sortFelid, page: currentPage - 1, limit: itemPerPage });
       }
     }
   };
 
   const handlePagination = (currentPage: number) => {
     setCurrentPage(currentPage as number);
-    setSortFelid({ page: currentPage, limit: itemPerPage });
+    setSortFelid({ ...sortFelid, page: currentPage, limit: itemPerPage });
   };
 
   const handlePageViewContent = (e: any) => {
     setCurrentPage(1),
-    setSortFelid({ page: 1, limit: parseInt(e.target.value) });
+      setSortFelid({...sortFelid, page: 1, limit: parseInt(e.target.value) });
     setItemPerPage(parseInt(e.target.value));
   };
+
+  const handleAddToCart = (id : string) => {
+    dispatch(addToCart(id))
+  }
   console.log(sortFelid);
   return (
     <div className="m-5 ">
@@ -276,7 +298,7 @@ const Products = () => {
           </div>
         </div>
       </dialog>
-      <div className=" border hidden md:hidden lg:block rounded-lg px-4 py-5">
+      <div className=" my-10 border hidden md:hidden lg:block rounded-lg px-4 py-5">
         <h1 className="text-xl font-semibold text-center">Filter</h1>
         <div className="flex space-x-8 justify-center items-center">
           <div className="dropdown w-36">
@@ -431,11 +453,14 @@ const Products = () => {
         ) : (
           <div className=" grid md:grid-cols-3 lg:grid-cols-4 gap-5 ">
             {data?.data?.map((item: TProduct) => (
-              <div key={item._id}>
+              <div
+                key={item._id}
+                className=" main-content border overflow-hidden  rounded-lg hover:border-[#228B22] delay-75 ease-in"
+              >
                 <Link to={`/productDetails/${item._id}`}>
-                  <div className="border rounded-lg hover:border-[#228B22] delay-75 ease-in">
+                  <div>
                     <img
-                      className=" border-b-2 md:h-[260px] lg:h-[350px] p-2 w-full"
+                      className=" border-b-2 rounded-t-md md:h-[260px] lg:h-[350px] w-full"
                       src={item.images[0]}
                       alt=""
                     />
@@ -451,6 +476,11 @@ const Products = () => {
                     </div>
                   </div>
                 </Link>
+                <div className="relative add-to-cart inset-0 text-white text-lg font-semibold hidden transition-opacity duration-300">
+                  <div className="p-5 absolute bottom-0 w-full rounded-md bg-black bg-opacity-30">
+                    <button onClick={()=>handleAddToCart(item._id)} className="btn text-center border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full">Add To Cart</button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
