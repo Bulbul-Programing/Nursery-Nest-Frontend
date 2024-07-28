@@ -24,7 +24,7 @@ export const counterSlice = createSlice({
           if(state.products[getIndex].quantity < state.products[getIndex].maxQuantity){
             state.products[getIndex].quantity = state.products[getIndex].quantity + 1
           }
-        }
+        } 
         else{
           state.products.push(action.payload)
         }
