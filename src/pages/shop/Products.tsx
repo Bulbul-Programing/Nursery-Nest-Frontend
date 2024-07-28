@@ -122,10 +122,10 @@ const Products = () => {
     setItemPerPage(parseInt(e.target.value));
   };
 
-  const handleAddToCart = (id: string) => {
-    dispatch(addToCart(id));
+  const handleAddToCart = (id: string, maxQuantity: number) => {
+    dispatch(addToCart({ id, quantity: 1, maxQuantity }));
   };
- 
+
   return (
     <div className="m-5 ">
       <button
@@ -157,7 +157,13 @@ const Products = () => {
                   <li className="mb-2 w-full border rounded-lg selected">
                     <button
                       onClick={() => {
-                        setSortFelid({ ...sortFelid, sort: "name" });
+                        setSortFelid({
+                          ...sortFelid,
+                          sort: "name",
+                          page: 1,
+                          limit: itemPerPage,
+                        });
+                        setCurrentPage(1);
                       }}
                     >
                       A To Z
@@ -166,7 +172,13 @@ const Products = () => {
                   <li className="mb-2 w-full border rounded-lg">
                     <button
                       onClick={() => {
-                        setSortFelid({ ...sortFelid, sort: "-name" });
+                        setSortFelid({
+                          ...sortFelid,
+                          sort: "-name",
+                          page: 1,
+                          limit: itemPerPage,
+                        });
+                        setCurrentPage(1);
                       }}
                     >
                       Z To A
@@ -175,7 +187,13 @@ const Products = () => {
                   <li className="mb-2 w-full border rounded-lg">
                     <button
                       onClick={() => {
-                        setSortFelid({ ...sortFelid, sort: "-price" });
+                        setSortFelid({
+                          ...sortFelid,
+                          sort: "-price",
+                          page: 1,
+                          limit: itemPerPage,
+                        });
+                        setCurrentPage(1);
                       }}
                     >
                       High to Low
@@ -184,7 +202,13 @@ const Products = () => {
                   <li className="mb-2 w-full border rounded-lg">
                     <button
                       onClick={() => {
-                        setSortFelid({ ...sortFelid, sort: "price" });
+                        setSortFelid({
+                          ...sortFelid,
+                          sort: "price",
+                          page: 1,
+                          limit: itemPerPage,
+                        });
+                        setCurrentPage(1);
                       }}
                     >
                       Low to High
@@ -203,7 +227,10 @@ const Products = () => {
                         setSortFelid({
                           ...sortFelid,
                           category: "Indoor Plants",
+                          page: 1,
+                          limit: itemPerPage,
                         });
+                        setCurrentPage(1);
                       }}
                     >
                       Indoor Plants
@@ -215,7 +242,10 @@ const Products = () => {
                         setSortFelid({
                           ...sortFelid,
                           category: "Outdoor Plants",
+                          page: 1,
+                          limit: itemPerPage,
                         });
+                        setCurrentPage(1);
                       }}
                     >
                       Outdoor Plants
@@ -227,7 +257,10 @@ const Products = () => {
                         setSortFelid({
                           ...sortFelid,
                           category: "Plant Care & Accessories",
+                          page: 1,
+                          limit: itemPerPage,
                         });
+                        setCurrentPage(1);
                       }}
                     >
                       Plant Care & Accessories
@@ -239,7 +272,10 @@ const Products = () => {
                         setSortFelid({
                           ...sortFelid,
                           category: "Pots & Planters",
+                          page: 1,
+                          limit: itemPerPage,
                         });
+                        setCurrentPage(1);
                       }}
                     >
                       Pots & Planters
@@ -251,7 +287,10 @@ const Products = () => {
                         setSortFelid({
                           ...sortFelid,
                           category: "Gardening Tools & Supplies",
+                          page: 1,
+                          limit: itemPerPage,
                         });
+                        setCurrentPage(1);
                       }}
                     >
                       Gardening Tools & Supplies
@@ -317,7 +356,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg selected">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, sort: "name" });
+                    setSortFelid({
+                      ...sortFelid,
+                      sort: "name",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   A To Z
@@ -326,7 +371,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, sort: "-name" });
+                    setSortFelid({
+                      ...sortFelid,
+                      sort: "-name",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   Z To A
@@ -335,7 +386,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, sort: "-price" });
+                    setSortFelid({
+                      ...sortFelid,
+                      sort: "-price",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   High to Low
@@ -344,7 +401,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, sort: "price" });
+                    setSortFelid({
+                      ...sortFelid,
+                      sort: "price",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   Low to High
@@ -360,7 +423,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg selected">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, category: "Indoor Plants" });
+                    setSortFelid({
+                      ...sortFelid,
+                      category: "Indoor Plants",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   Indoor Plants
@@ -369,7 +438,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg selected">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, category: "Outdoor Plants" });
+                    setSortFelid({
+                      ...sortFelid,
+                      category: "Outdoor Plants",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   Outdoor Plants
@@ -381,7 +456,10 @@ const Products = () => {
                     setSortFelid({
                       ...sortFelid,
                       category: "Plant Care & Accessories",
+                      page: 1,
+                      limit: itemPerPage,
                     });
+                    setCurrentPage(1);
                   }}
                 >
                   Plant Care & Accessories
@@ -390,7 +468,13 @@ const Products = () => {
               <li className="mb-2 w-full border rounded-lg selected">
                 <button
                   onClick={() => {
-                    setSortFelid({ ...sortFelid, category: "Pots & Planters" });
+                    setSortFelid({
+                      ...sortFelid,
+                      category: "Pots & Planters",
+                      page: 1,
+                      limit: itemPerPage,
+                    });
+                    setCurrentPage(1);
                   }}
                 >
                   Pots & Planters
@@ -402,7 +486,10 @@ const Products = () => {
                     setSortFelid({
                       ...sortFelid,
                       category: "Gardening Tools & Supplies",
+                      page: 1,
+                      limit: itemPerPage,
                     });
+                    setCurrentPage(1);
                   }}
                 >
                   Gardening Tools & Supplies
@@ -463,10 +550,10 @@ const Products = () => {
             {data?.data?.map((item: TProduct) => (
               <div
                 key={item._id}
-                className=" main-content border overflow-hidden  rounded-lg hover:border-[#228B22] delay-75 ease-in"
+                className=" relative h-[580px] md:h-[450px] lg:h-[500px] main-content border overflow-hidden  rounded-lg hover:border-[#228B22] delay-75 ease-in"
               >
                 <Link to={`/productDetails/${item._id}`}>
-                  <div>
+                  <div className="">
                     <img
                       className=" border-b-2 rounded-t-md md:h-[260px] lg:h-[350px] w-full"
                       src={item.images[0]}
@@ -474,20 +561,42 @@ const Products = () => {
                     />
                     <div className="p-2">
                       <p className="font-medium text-lg">{item.name}</p>
-                      <p className=" text-[#7e7e7e] mt-2">
+                      <p className=" text-[#7e7e7e] mt-2 block md:hidden lg:hidden">
+                        {item.description.length > 60
+                          ? item.description.slice(0, 60)
+                          : item.description}
+                        {item.description.length > 60 ? "..." : ""}
+                      </p>
+                      <p className=" text-[#7e7e7e] mt-2 hidden md:hidden lg:block">
                         {item.description.length > 55
                           ? item.description.slice(0, 55)
                           : item.description}
                         {item.description.length > 55 ? "..." : ""}
                       </p>
+                      <p className=" text-[#7e7e7e] mt-2 hidden md:block lg:hidden">
+                        {item.description.length > 40
+                          ? item.description.slice(0, 40)
+                          : item.description}
+                        {item.description.length > 40 ? "..." : ""}
+                      </p>
+                    </div>
+                    <div className="absolute bottom-14 md:bottom-12 lg:bottom-0 p-2">
                       <p className="text-2xl font-bold mt-2">$ {item.price}</p>
                     </div>
                   </div>
                 </Link>
-                <div className="relative add-to-cart inset-0 text-white text-lg font-semibold hidden transition-opacity duration-300">
-                  <div className="p-5 absolute bottom-0 w-full rounded-md bg-black bg-opacity-30">
+                <div className="absolute bottom-0 w-full p-2">
+                  <button
+                    onClick={() => handleAddToCart(item._id, item.stock)}
+                    className="btn text-center block md:block lg:hidden border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full"
+                  >
+                    Add To Cart
+                  </button>
+                </div>
+                <div className="absolute w-full bottom-0 add-to-cart text-white text-lg font-semibold hidden transition-opacity duration-300">
+                  <div className="p-5 w-full hidden md:hidden lg:block rounded-md bg-black bg-opacity-30">
                     <button
-                      onClick={() => handleAddToCart(item._id)}
+                      onClick={() => handleAddToCart(item._id, item.stock)}
                       className="btn text-center border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full"
                     >
                       Add To Cart

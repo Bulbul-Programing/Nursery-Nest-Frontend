@@ -27,7 +27,15 @@ const academicSemesterApi = baseApi.injectEndpoints({
         };
       },
     }),
+    singleProduct: builder.query({
+      query: (priority) => {
+        return {
+          url: `/product/${priority}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetAllProductQuery, useProductCountQuery } = academicSemesterApi;
+export const { useGetAllProductQuery, useProductCountQuery, useSingleProductQuery } = academicSemesterApi;

@@ -8,12 +8,16 @@ import { RootState } from "@/redux/store";
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
-  const cartItems = useAppSelector((state: RootState) => state.addToCart.id);
+  const cartItems = useAppSelector(
+    (state: RootState) => state.addToCart.products
+  );
   const modalEvent = document.getElementById("modal") as HTMLElement;
   const modalIcon = document.getElementById("modalIcon") as HTMLElement;
   const modalForm = document.getElementById("modalForm") as HTMLElement;
   const modalButton = document.getElementById("modalButton") as HTMLElement;
-  
+  const [hideNavbar, setHideNavbar] = useState(false);
+  const [scrollValue, setScrollValue] = useState(0);
+  console.log(cartItems);
   const navElement = (
     <>
       <NavLink
@@ -38,16 +42,33 @@ const Navbar = () => {
   );
 
   window.onclick = function (event: MouseEvent): void {
-    if(event.target === modalEvent || event.target === modalIcon || event.target === modalForm || event.target === modalButton){
-        setModal(true)
-    }
-    else{
-        setModal(false)
+    if (
+      event.target === modalEvent ||
+      event.target === modalIcon ||
+      event.target === modalForm ||
+      event.target === modalButton
+    ) {
+      setModal(true);
+    } else {
+      setModal(false);
     }
   };
 
+  window.addEventListener("scroll", function () {
+    if (scrollValue < this.scrollY) {
+      setHideNavbar(true);
+    } else {
+      setHideNavbar(false);
+    }
+    setScrollValue(this.scrollY);
+  });
+
   return (
-    <div className="relative">
+    <div
+      className={`sticky top-0 z-10 transition duration-500 ${
+        hideNavbar ? "translate-y-[-110px]" : "top-0 translate-y-0"
+      } relative`}
+    >
       <div
         id="modal"
         className={`${
@@ -60,7 +81,10 @@ const Navbar = () => {
           name=""
           id="modalForm"
         />
-        <button id="modalButton" className="btn hover:bg-[#6ba56b] bg-[#8FBC8F] text-white ml-3">
+        <button
+          id="modalButton"
+          className="btn hover:bg-[#6ba56b] bg-[#8FBC8F] text-white ml-3"
+        >
           Search
         </button>
       </div>
@@ -90,7 +114,7 @@ const Navbar = () => {
               {navElement}
             </ul>
           </div>
-          <Link to='/' className="flex justify-center items-center">
+          <Link to="/" className="flex justify-center items-center">
             <img
               className="w-[40px] md:w-[70px] lg:w-[70px]"
               src="https://i.ibb.co/wwdVnGK/Abstract-Green-Healthy-Life-Free-Logo-1.png"
@@ -105,9 +129,14 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navElement}</ul>
         </div>
         <div className="navbar-end w-[43%] md:w-1/2 lg:w-1/2">
-          <IoSearch id="modalIcon" onClick={() => setModal(true)} className="text-3xl mr-3 cursor-pointer" />
+          <IoSearch
+            id="modalIcon"
+            onClick={() => setModal(true)}
+            className="text-3xl mr-3 cursor-pointer"
+          />
           <button className="btn bg-[#8FBC8F] hover:bg-[#639c63] text-white">
-            <FaCartArrowDown className="text-xl" />{cartItems.length} items
+            <FaCartArrowDown className="text-xl" />
+            {cartItems?.length} items
           </button>
         </div>
       </div>
