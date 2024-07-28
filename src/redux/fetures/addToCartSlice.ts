@@ -21,8 +21,8 @@ export const counterSlice = createSlice({
         const isExistItem = state.products.find(product => product.id === action.payload.id)
         if(isExistItem){
           const getIndex = state.products.findIndex(product => product.id === action.payload.id)
-          if(state.products[getIndex].quantity < state.products[getIndex].maxQuantity){
-            state.products[getIndex].quantity = state.products[getIndex].quantity + 1
+          if((state.products[getIndex].quantity + action.payload.quantity) <= state.products[getIndex].maxQuantity){
+            state.products[getIndex].quantity = state.products[getIndex].quantity + action.payload.quantity
           }
         } 
         else{

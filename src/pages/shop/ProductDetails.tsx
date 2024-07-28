@@ -214,7 +214,7 @@ const ProductDetails = () => {
                     </Link>
                     <button
                       id="add-to-cart-fb-pixel"
-                    onClick={() => dispatch(addToCart(data.data._id))}
+                    onClick={() => dispatch(addToCart({ id : data.data._id, quantity: quantity, maxQuantity : data.data.stock }))}
                       className="px-5 py-3 my-2 bg-[#8FBC8F] mb-8 hover:bg-[#669c66] delay-75 transition ease-in-out text-white font-medium rounded-md ml-3"
                     >
                       Add to Cart
