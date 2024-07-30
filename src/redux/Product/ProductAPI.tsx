@@ -5,9 +5,9 @@ const academicSemesterApi = baseApi.injectEndpoints({
     getAllProduct: builder.query({
       query: (priority) => {
         const params = new URLSearchParams();
-        const key = Object.keys(priority);
-        const value = Object.values(priority);
         if (priority) {
+          const key = Object.keys(priority);
+          const value = Object.values(priority);
           for (let index = 0; index < key.length; index++) {
             params.append(key[index], value[index] as string);
           }
@@ -23,7 +23,7 @@ const academicSemesterApi = baseApi.injectEndpoints({
       query: () => {
         return {
           url: "/product/productCount",
-          method: "GET"
+          method: "GET",
         };
       },
     }),
@@ -38,4 +38,8 @@ const academicSemesterApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllProductQuery, useProductCountQuery, useSingleProductQuery } = academicSemesterApi;
+export const {
+  useGetAllProductQuery,
+  useProductCountQuery,
+  useSingleProductQuery,
+} = academicSemesterApi;

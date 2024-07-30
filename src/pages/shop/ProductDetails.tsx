@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSingleProductQuery } from "../../redux/Product/ProductAPI";
 import { Link, useParams } from "react-router-dom";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { FaDollarSign } from "react-icons/fa";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -125,8 +126,8 @@ const ProductDetails = () => {
               <div className="py-5 border-b">
                 <div className="flex items-center gap-x-2">
                   <p className="flex text-base md:text-base lg:text-xl items-center text-[#8FBC8F] font-bold">
-                    <TbCurrencyTaka className="text-lg md:text-2xl lg:text-3xl font-extrabold"></TbCurrencyTaka>{" "}
-                    <span>{(data.data.price * quantity).toFixed(2)}</span>
+                    <FaDollarSign className="text-lg md:text-2xl lg:text-2xl font-extrabold"></FaDollarSign>{" "}
+                    <span className="text-2xl">{(data.data.price * quantity).toFixed(2)}</span>
                   </p>
                   {/* <p className="flex text-xs md:text-base lg:text-lg items-center line-through text-slate-400 font-medium">
                     <TbCurrencyTaka className="text-sm md:text-lg lg:text-lg line-through font-extrabold"></TbCurrencyTaka>{" "}
