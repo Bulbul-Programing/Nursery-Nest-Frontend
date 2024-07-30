@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { useSingleProductQuery } from "../../redux/Product/ProductAPI";
 import { Link, useParams } from "react-router-dom";
-import { TbCurrencyTaka } from "react-icons/tb";
 import { FaDollarSign } from "react-icons/fa";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import { useAppDispatch } from "../../redux/hooks";
 import { addToCart } from "../../redux/fetures/addToCartSlice";
 
@@ -14,10 +11,6 @@ const ProductDetails = () => {
   const { data, isLoading } = useSingleProductQuery(id);
   const [selectImg, setSelectImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [relatedProduct, setRelatedProduct] = useState([]);
-  const [productId, setProductId] = useState(id);
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   if (isLoading) {

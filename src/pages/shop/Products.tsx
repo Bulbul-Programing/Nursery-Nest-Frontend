@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import "./product.css";
 import { addToCart } from "../../redux/fetures/addToCartSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { RootState } from "@/redux/store";
+import { useAppDispatch } from "../../redux/hooks";
 
 type TProduct = {
   _id: string;
