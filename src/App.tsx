@@ -8,11 +8,7 @@ function App() {
   const cartItems = useAppSelector(
     (state: RootState) => state.addToCart.products
   );
-
-  //   const dispatch = useAppDispatch()
-  //   const count = useAppSelector((state) => state.addToCart.id)
-  //   // const {data, isLoading} = useGetAllProductQuery(undefined)
-  //   console.log(count);
+   
   useEffect(() => {
     if (cartItems.length > 1) {
       return;

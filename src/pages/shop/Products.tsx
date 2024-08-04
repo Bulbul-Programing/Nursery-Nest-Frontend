@@ -9,7 +9,7 @@ import "./product.css";
 import { addToCart } from "../../redux/fetures/addToCartSlice";
 import { useAppDispatch } from "../../redux/hooks";
 
-type TProduct = {
+export type TProduct = {
   _id: string;
   name: string;
   description: string;
@@ -20,6 +20,7 @@ type TProduct = {
   rating: number;
   createdAt: Date;
   updatedAt: Date;
+  stockStatus: string;
 };
 
 type TFilter = {
@@ -593,13 +594,17 @@ const Products = () => {
                   </button>
                 </div>
                 <div className="absolute w-full bottom-0 add-to-cart text-white text-lg font-semibold hidden transition-opacity duration-300">
-                  <div className="p-5 w-full hidden md:hidden lg:block rounded-md bg-black bg-opacity-30">
-                    <button
-                      onClick={() => handleAddToCart(item._id, item.stock)}
-                      className="btn text-center border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full"
-                    >
-                      Add To Cart
-                    </button>
+                  <div className={`p-5 w-full hidden md:hidden lg:block rounded-md bg-[#8FBC8F] ${item.stock < 1 ? 'bg-opacity-100' : 'bg-opacity-40'}`}>
+                    {item.stock < 1 ? (
+                      <p className="text-white">Product Stock Out</p>
+                    ) : (
+                      <button
+                        onClick={() => handleAddToCart(item._id, item.stock)}
+                        className="btn text-center border-2 text-white hover:border-white bg-[#8FBC8F] hover:bg-[#6db46d] w-full"
+                      >
+                        Add To Cart
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

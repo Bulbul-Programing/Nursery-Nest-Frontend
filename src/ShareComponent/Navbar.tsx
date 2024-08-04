@@ -32,8 +32,9 @@ const Navbar = () => {
   const [hideNavbar, setHideNavbar] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const [searchValue, setSearchValue] = useState({ searchTerm: "undefined" });
-  const debounce = useDebounce(searchValue);
-  const { data, isLoading } = useGetAllProductQuery(debounce);
+  const {debounceValue, loading} = useDebounce(searchValue);
+  const { data, isLoading } = useGetAllProductQuery(debounceValue);
+   
   const navElement = (
     <>
       <NavLink
@@ -56,7 +57,6 @@ const Navbar = () => {
       </NavLink>
     </>
   );
-  
   if (isLoading) {
     return (
       <div className="flex justify-center my-20">
@@ -81,7 +81,14 @@ const Navbar = () => {
       setSearchValue({ searchTerm: "undefined" });
     }
   };
-  console.log(data?.data, isLoading);
+
+  const handleModal = () => {
+    (document.getElementById(
+      "my_modal_7"
+    ) as HTMLDialogElement)!.close()!
+    // (document.getElementById('my-modal-7')as HTMLElement).close();
+  }
+ 
   return (
     <div>
       <div
@@ -146,10 +153,10 @@ const Navbar = () => {
                 className="text-3xl mr-3 cursor-pointer"
               />
             </button>
-            <button className="btn bg-[#8FBC8F] hover:bg-[#639c63] text-white">
+            <Link to='/checkout' className="btn bg-[#8FBC8F] hover:bg-[#639c63] text-white">
               <FaCartArrowDown className="text-xl" />
               {cartItems?.length} items
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -176,10 +183,15 @@ const Navbar = () => {
               </div>
             </div>
             <div className={`${data?.data ? 'mt-5' : 'mt-0'}`}>
+              <div>
+                {
+                  loading ? <div className="flex justify-center"><span className="loading loading-ring loading-lg"></span></div> : ''
+                }
+              </div>
               {data?.data &&
                 data?.data.map((product: TProduct) => (
-                  <div className="flex justify-between items-center gap-x-3 mb-3 rounded-md border-2 border-slate-300 p-1">
-                    <div className="w-1/4">
+                  <Link onClick={handleModal} to={`/productDetails/${product._id}`} className={`flex modal-action ${loading ? 'hidden' : 'block'} justify-between items-center gap-x-3 mb-3 rounded-md border-2 hover:border-[#8FBC8F] border-slate-300 p-1`}>
+                    <div className="w-1/4 dialog">
                       <img
                         className="w-full rounded-md"
                         src={product.images[0]}
@@ -201,7 +213,7 @@ const Navbar = () => {
                         </span>
                       </p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
             </div>
           </div>

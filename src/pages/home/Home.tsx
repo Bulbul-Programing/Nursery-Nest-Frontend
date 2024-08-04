@@ -1,4 +1,5 @@
 import Banner from "./Banner";
+import ImagesSection from "./ImagesSection";
 import NewCollection from "./NewCollection";
 import OurService from "./OurService";
 import TopProduct from "./TopProduct";
@@ -10,6 +11,7 @@ const home = () => {
             <NewCollection></NewCollection>
             <OurService></OurService>
             <TopProduct></TopProduct>
+            <ImagesSection></ImagesSection>
         </div>
     );
 };
