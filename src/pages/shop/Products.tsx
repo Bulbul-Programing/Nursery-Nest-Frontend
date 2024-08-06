@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import "./product.css";
 import { addToCart } from "../../redux/fetures/addToCartSlice";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { RootState } from "@/redux/store";
 
 export type TProduct = {
   _id: string;
@@ -41,6 +42,10 @@ const Products = () => {
   const { data: productCount, isLoading: isLoading2 } =
     useProductCountQuery(undefined);
   const dispatch = useAppDispatch();
+
+  const cartItems = useAppSelector(
+    (state: RootState) => state.addToCart.products
+  );
 
   if (isLoading || isLoading2) {
     return (
@@ -123,7 +128,12 @@ const Products = () => {
   };
 
   const handleAddToCart = (id: string, maxQuantity: number) => {
-    dispatch(addToCart({ id, quantity: 1, maxQuantity }));
+    const existItem = cartItems.filter((item) => item.id === id);
+    console.log(existItem);
+    const quantity = existItem.length > 0 ? existItem[0].quantity + 1 : 1;
+    if (existItem) {
+      dispatch(addToCart({ id, quantity, maxQuantity }));
+    }
   };
 
   return (
@@ -594,7 +604,11 @@ const Products = () => {
                   </button>
                 </div>
                 <div className="absolute w-full bottom-0 add-to-cart text-white text-lg font-semibold hidden transition-opacity duration-300">
-                  <div className={`p-5 w-full hidden md:hidden lg:block rounded-md bg-[#8FBC8F] ${item.stock < 1 ? 'bg-opacity-100' : 'bg-opacity-40'}`}>
+                  <div
+                    className={`p-5 w-full hidden md:hidden lg:block rounded-md bg-[#8FBC8F] ${
+                      item.stock < 1 ? "bg-opacity-100" : "bg-opacity-40"
+                    }`}
+                  >
                     {item.stock < 1 ? (
                       <p className="text-white">Product Stock Out</p>
                     ) : (

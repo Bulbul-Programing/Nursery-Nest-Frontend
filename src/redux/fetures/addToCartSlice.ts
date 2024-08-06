@@ -1,38 +1,55 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 type TAddToCartProducts = {
-  id : string,
-  quantity : number,
-  maxQuantity : number
-}
+  id: string;
+  quantity: number;
+  maxQuantity: number;
+};
 export type CounterState = {
-  products: TAddToCartProducts[]
-}
+  products: TAddToCartProducts[];
+};
 
 const initialState: CounterState = {
-  products: [] ,
-}
+  products: [],
+};
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: "counter",
   initialState,
   reducers: {
-    addToCart : (state, action) => {
-        const isExistItem = state.products.find(product => product.id === action.payload.id)
-        if(isExistItem){
-          const getIndex = state.products.findIndex(product => product.id === action.payload.id)
-          if((state.products[getIndex].quantity + action.payload.quantity) <= state.products[getIndex].maxQuantity){
-            state.products[getIndex].quantity = state.products[getIndex].quantity + action.payload.quantity
-          }
-        } 
-        else{
-          state.products.push(action.payload)
+    addToCart: (state, action) => {
+      const isExistItem = state.products.find(
+        (product) => product.id === action.payload.id
+      );
+      if (isExistItem) {
+        const getIndex = state.products.findIndex(
+          (product) => product.id === action.payload.id
+        );
+        if (
+          state.products[getIndex].quantity + (action.payload.quantity === 1 ? 1 : 0) <=
+          state.products[getIndex].maxQuantity
+        ) {
+          state.products[getIndex].quantity = Number(action.payload.quantity)
         }
-    }
+      } else {
+        state.products.push(action.payload);
+      }
+    },
+    deleteToCart: (state, action) => {
+      console.log(action.payload);
+      const isExistItem = state.products.find(
+        (product) => product.id === action.payload.id
+      );
+      console.log(isExistItem);
+      if (isExistItem) {
+        const indexOf = state.products.indexOf(action.payload.id);
+        state.products.splice(indexOf, 1);
+      }
+    },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { addToCart } = counterSlice.actions
+export const { addToCart , deleteToCart} = counterSlice.actions;
 
-export default counterSlice.reducer
+export default counterSlice.reducer;
