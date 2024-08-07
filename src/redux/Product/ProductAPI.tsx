@@ -43,6 +43,16 @@ const academicSemesterApi = baseApi.injectEndpoints({
           body : priority
         }
       }
+    }),
+    createOrder : builder.mutation({
+      query : (orderData) => {
+        console.log(orderData)
+        return {
+          url : '/order/create-order',
+          method : "POST",
+          body : orderData
+        }
+      }
     })
   }),
 });
@@ -51,5 +61,6 @@ export const {
   useGetAllProductQuery,
   useProductCountQuery,
   useSingleProductQuery,
-  useGetMultipleProductQuery
+  useGetMultipleProductQuery,
+  useCreateOrderMutation
 } = academicSemesterApi;

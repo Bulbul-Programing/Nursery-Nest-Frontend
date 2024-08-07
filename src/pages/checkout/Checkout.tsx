@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import districts from "./districts";
-import { useGetMultipleProductQuery } from "../../redux/Product/ProductAPI";
+import {
+  useCreateOrderMutation,
+  useGetMultipleProductQuery,
+} from "../../redux/Product/ProductAPI";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { RootState } from "@/redux/store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TProduct } from "../shop/Products";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { addToCart, deleteToCart } from "../../redux/fetures/addToCartSlice";
 import { ImCross } from "react-icons/im";
 import { toast } from "sonner";
+import Swal from "sweetalert2";
 
 type TSubDistrict = string[];
 const Checkout = () => {
@@ -24,7 +28,8 @@ const Checkout = () => {
   const [cartItemsId, setCartItemsId] = useState([] as TSubDistrict);
   const { data, isLoading } = useGetMultipleProductQuery(cartItemsId);
   const dispatch = useAppDispatch();
-  const [totalPrice, setTotalPrice] = useState(0);
+  const Navigate = useNavigate()
+  const [orderCreate] = useCreateOrderMutation();
 
   useEffect(() => {
     const newArray = [] as TSubDistrict;
@@ -59,6 +64,17 @@ const Checkout = () => {
     );
   }
 
+  const checkoutItems = data?.data.map((item: TProduct) => {
+    const cartItem = cartItems.find((i) => i.id === item._id);
+    const quantity = cartItem ? cartItem.quantity : 0;
+    const totalPrice = item.price * quantity;
+    return totalPrice;
+  });
+
+  const totalPrice = checkoutItems
+    .reduce((sum: number, item: string) => sum + item, 0)
+    .toFixed(2);
+
   const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const districtName = e.currentTarget.value;
     setSelectedDistrict(districtName);
@@ -74,25 +90,44 @@ const Checkout = () => {
     setSelectedSubdistrict(e.target.value);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const target = e.currentTarget;
-    const name = target.name.value;
-    const phone = target.phoneNumber.value;
-    const email = target.email.value;
-    const districtName = selectedDistrict;
-    const subdistrict = selectedSubdistrict;
-    const address = target.address.value;
-    const customerInfo = {
-      name,
-      phone,
-      email,
-      districtName,
-      subdistrict,
-      address,
-      products: cartItems,
-    };
-    console.table(customerInfo);
+    try {
+      const target = e.currentTarget;
+      const name = target.name.value;
+      const phone = target.phoneNumber.value;
+      const email = target.email.value;
+      const districtName = selectedDistrict;
+      const subdistrict = selectedSubdistrict;
+      const address = target.address.value;
+      const customerInfo = {
+        name,
+        phone,
+        email,
+        districtName,
+        subdistrict,
+        address,
+        products: cartItems,
+        totalPrice,
+      };
+      const res = await orderCreate(customerInfo).unwrap();
+      if (res.success) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Order create successfully!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        Navigate('/')
+      }
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err?.data?.message);
+    }
+    // if(res.success){
+    //   toast.success('Order create successfully')
+    // }
   };
 
   const handleCartItem = (
@@ -101,37 +136,29 @@ const Checkout = () => {
     status: string,
     maxQuantity: number
   ) => {
+    const inputElement = document.getElementById(`${id}`) as HTMLInputElement;
     if (status === "plus") {
-      const increaseOne =
-        Number((document.getElementById(`${id}`) as HTMLInputElement)!.value) +
-        1;
+      const increaseOne = parseInt(inputElement.value) + 1;
       if (increaseOne <= maxQuantity) {
-        (document.getElementById(`${id}`) as HTMLInputElement)!.value =
-          increaseOne.toString();
+        inputElement.value = increaseOne.toString();
         dispatch(addToCart({ id, quantity: parseInt(value) + 1, maxQuantity }));
       }
     }
     if (status === "minus") {
-      const decrease =
-        Number((document.getElementById(`${id}`) as HTMLInputElement)!.value) -
-        1;
+      const decrease = parseInt(inputElement.value) - 1;
       if (decrease >= 1) {
-        (document.getElementById(`${id}`) as HTMLInputElement)!.value =
-          decrease.toString();
+        inputElement.value = decrease.toString();
         dispatch(addToCart({ id, quantity: parseInt(value) - 1, maxQuantity }));
       }
     }
     if (status === "default") {
-      const felidValue = Number(
-        (document.getElementById(`${id}`) as HTMLInputElement)!.value
-      );
+      const felidValue = parseInt(value);
+      console.log(felidValue);
       if (maxQuantity >= felidValue) {
-        (document.getElementById(`${id}`) as HTMLInputElement)!.value =
-          felidValue.toString();
+        inputElement.value = felidValue.toString();
         dispatch(addToCart({ id, quantity: Number(value), maxQuantity }));
       } else {
-        (document.getElementById(`${id}`) as HTMLInputElement)!.value =
-          maxQuantity.toString();
+        inputElement.value = maxQuantity.toString();
         dispatch(addToCart({ id, quantity: maxQuantity, maxQuantity }));
       }
     }
@@ -397,7 +424,7 @@ const Checkout = () => {
                         <input
                           className="border border-slate-400 p-2 rounded-md w-20"
                           type="number"
-                          name=""
+                          id={product._id}
                           onChange={(e: React.FormEvent<HTMLInputElement>) =>
                             handleCartItem(
                               product._id,
@@ -406,8 +433,7 @@ const Checkout = () => {
                               product.stock
                             )
                           }
-                          id={product._id}
-                          defaultValue={(() => {
+                          value={(() => {
                             const foundItem = cartItems.find(
                               (item) => item.id === product._id
                             );
@@ -447,16 +473,16 @@ const Checkout = () => {
               <h1 className="text-2xl font-bold mb-3 text-center">Order</h1>
               <span className="flex justify-between">
                 <p className="text-lg font-semibold">Total Price : </p>
-                <p className="text-lg font-semibold">{totalPrice}</p>
+                <p className="text-lg font-semibold">$ {totalPrice}</p>
               </span>
               <span className="flex justify-between border-b border-black pb-2">
                 <p className="text-lg font-semibold">Shipping Cost : </p>
-                <p className="text-lg font-semibold">{}</p>
+                <p className="text-lg font-semibold">$ 10</p>
               </span>
               <span className="flex justify-between pt-2">
                 <p className="text-lg font-semibold">Grand Total : </p>
-                <p className="text-lg font-semibold text-white px-4 rounded-md bg-[#019dd1]">
-                  {}
+                <p className="text-lg font-semibold text-white px-4 rounded-md bg-[#8FBC8F]">
+                  $ {Number(totalPrice) + 10}
                 </p>
               </span>
             </div>

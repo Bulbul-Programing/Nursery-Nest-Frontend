@@ -190,7 +190,7 @@ const Navbar = () => {
               </div>
               {data?.data &&
                 data?.data.map((product: TProduct) => (
-                  <Link onClick={handleModal} to={`/productDetails/${product._id}`} className={`flex modal-action ${loading ? 'hidden' : 'block'} justify-between items-center gap-x-3 mb-3 rounded-md border-2 hover:border-[#8FBC8F] border-slate-300 p-1`}>
+                  <Link key={product._id} onClick={handleModal} to={`/productDetails/${product._id}`} className={`flex modal-action ${loading ? 'hidden' : 'block'} justify-between items-center gap-x-3 mb-3 rounded-md border-2 hover:border-[#8FBC8F] border-slate-300 p-1`}>
                     <div className="w-1/4 dialog">
                       <img
                         className="w-full rounded-md"

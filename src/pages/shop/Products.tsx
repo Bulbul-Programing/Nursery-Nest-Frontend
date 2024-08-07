@@ -129,7 +129,6 @@ const Products = () => {
 
   const handleAddToCart = (id: string, maxQuantity: number) => {
     const existItem = cartItems.filter((item) => item.id === id);
-    console.log(existItem);
     const quantity = existItem.length > 0 ? existItem[0].quantity + 1 : 1;
     if (existItem) {
       dispatch(addToCart({ id, quantity, maxQuantity }));
