@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import Service from "./Service";
+import OurService from "../../pages/home/OurService";
 const About = () => {
   return (
     <div>
@@ -8,6 +9,7 @@ const About = () => {
           About
         </h1>
       </div>
+      <OurService></OurService>
       <div className=" flex flex-col md:flex-row lg:flex-row items-center justify-between gap-x-5 gap-y-5 m-5 md:m-10 lg:m-10">
         <img
           className=" w-full md:w-1/2 lg:w-1/2 rounded-lg"
@@ -30,6 +32,8 @@ const About = () => {
           <Link to='/shop' className="text-lg font-semibold btn mt-5 md:mt-3 lg:mt-5 hover:bg-[#8FBC8F] hover:text-white"><span className="text-2xl">+</span> View The Shop </Link>
         </div>
       </div>
+      <Service></Service>
+      
     </div>
   );
 };

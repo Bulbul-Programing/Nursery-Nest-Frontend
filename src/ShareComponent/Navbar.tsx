@@ -51,6 +51,12 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className="px-4 py-1 mr-2 rounded-sm font-medium font-[lato] text-lg"
+        to="/dashboard/home"
+      >
+        Dashboard
+      </NavLink>
+      <NavLink
+        className="px-4 py-1 mr-2 rounded-sm font-medium font-[lato] text-lg"
         to="/about"
       >
         About us
@@ -86,7 +92,6 @@ const Navbar = () => {
     (document.getElementById(
       "my_modal_7"
     ) as HTMLDialogElement)!.close()!
-    // (document.getElementById('my-modal-7')as HTMLElement).close();
   }
  
   return (

@@ -70,7 +70,7 @@ const Products = () => {
       </div>
     );
   }
-
+  
   const numberOfPage = Math.ceil(Number(productCount?.data) / itemPerPage);
   const pages = [...Array(numberOfPage).keys()];
 

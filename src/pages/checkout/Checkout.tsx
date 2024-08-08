@@ -482,7 +482,7 @@ const Checkout = () => {
               <span className="flex justify-between pt-2">
                 <p className="text-lg font-semibold">Grand Total : </p>
                 <p className="text-lg font-semibold text-white px-4 rounded-md bg-[#8FBC8F]">
-                  $ {Number(totalPrice) + 10}
+                  $ {(Number(totalPrice) + 10).toFixed(2)}
                 </p>
               </span>
             </div>

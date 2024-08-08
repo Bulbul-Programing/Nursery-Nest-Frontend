@@ -17,7 +17,7 @@ const NewCollection = () => {
   ];
   return (
     <div className="my-10">
-      <div className="flex flex-col md:flex-row lg:flex-row gap-x-10 mx-10 justify-between items-center">
+      <div className="flex mb-10 md:mb-0 lg:mb-0 flex-col md:flex-row lg:flex-row gap-x-10 mx-10 justify-between items-center">
         <img
           className="w-full md:w-[50%] lg:w-[50%] md:h-[250px] lg:h-[320px] rounded-xl"
           src="https://i.ibb.co/dkpFgLG/675x410-1-ezgif-com-webp-to-jpg-converter.jpg"
