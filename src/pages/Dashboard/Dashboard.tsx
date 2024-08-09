@@ -4,10 +4,8 @@ import {
   Bar,
   Rectangle,
   XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import { IoBagCheckOutline } from "react-icons/io5";
@@ -229,7 +227,7 @@ const Dashboard = () => {
                 <td>120</td>
                 <th className=" w-[220px] min-w-[220px] space-x-3">
                   <button className="btn bg-[#8FBC8F] text-white hover:bg-[#5fa55f]">Confirm</button>
-                  <button className="btn bg-[#FF5200] text-white hover:bg-[#ce4404]">Reject</button>
+                  <button className="btn bg-[#FF5200] text-white hover:bg-[#ce4404]">Reject</button> 
                 </th>
               </tr>
             </tbody>
