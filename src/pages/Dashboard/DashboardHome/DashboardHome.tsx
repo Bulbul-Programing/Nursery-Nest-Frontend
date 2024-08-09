@@ -4,9 +4,11 @@ import { useState } from "react";
 
 import { IoMenu } from "react-icons/io5";
 import { NavLink, Outlet } from "react-router-dom";
-import { AiFillProduct } from "react-icons/ai";
 import { FaBasketShopping } from "react-icons/fa6";
+import { MdDashboard } from "react-icons/md";
+import { FaBoxOpen } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
+
 const DashboardHome = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -33,18 +35,23 @@ const DashboardHome = () => {
   const dashboardNavItem = [
     {
       path: "/dashboard/home",
-      element: "Home",
-      icon: <FaHome></FaHome>,
+      element: "Dashboard",
+      icon: <MdDashboard></MdDashboard>,
     },
     {
       path: "/dashboard/product",
       element: "Product",
-      icon: <AiFillProduct></AiFillProduct>,
+      icon: <FaBoxOpen></FaBoxOpen>,
     },
     {
       path: "/dashboard/order",
       element: "Order",
       icon: <FaBasketShopping></FaBasketShopping>,
+    },
+    {
+      path: "/",
+      element: "Home",
+      icon: <FaHome></FaHome>,
     },
   ];
 

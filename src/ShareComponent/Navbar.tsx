@@ -96,8 +96,7 @@ const Navbar = () => {
  
   return (
     <div>
-      <div
-        className={`sticky top-0 z-10 transition duration-500 ${
+      <div className={`sticky top-0 z-10 transition duration-500 ${
           hideNavbar ? "translate-y-[-110px]" : "top-0 translate-y-0"
         }`}
       >
