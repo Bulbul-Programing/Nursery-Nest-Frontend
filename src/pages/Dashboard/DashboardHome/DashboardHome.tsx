@@ -99,7 +99,7 @@ const DashboardHome = () => {
         </div>
       </div>
       <h1 className="text-3xl shadow-xl text-center py-5 font-bold hidden md:hidden lg:block">Welcome to Dashboard</h1>
-      <div className=" m-2 md:m-2 lg:ml-20 mt-5">
+      <div className="bg-slate-100 p-2 md:p-2 lg:pl-20 pt-5">
         <Outlet></Outlet>
       </div>
     </div>
