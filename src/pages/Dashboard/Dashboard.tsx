@@ -11,6 +11,8 @@ import {
 import { IoBagCheckOutline } from "react-icons/io5";
 import { FaDollarSign } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
+import { useGetAllOrderQuery } from "../../redux/Product/ProductAPI";
+import { TCreateOrder } from "../../utils/orderType";
 
 interface CustomCSSProperties extends CSSProperties {
   "--value"?: string | number;
@@ -62,12 +64,42 @@ const data = [
     amt: 2100,
   },
 ];
+
+
+
 const Dashboard = () => {
+  const { data: orders, isLoading } = useGetAllOrderQuery(undefined);
+ 
   const customStyle: CustomCSSProperties = {
     "--value": "70",
     "--thickness": "1rem",
     "--size": "6rem",
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center my-20">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
+  if (!orders) {
+    return (
+      <div className="flex justify-center my-10">
+        <div className="my-5">
+          <h1 className="text-4xl font-semibold text-center my-2">
+            No Data Found !
+          </h1>
+          <img
+            className="w-[500px] mx-auto "
+            src="https://i.ibb.co/74kjdxL/55024593-9264822.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+    );
+  }
+  // console.log(orders.data[0].products[0].id.images[0]);
   return (
     <div>
       <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 ">
@@ -187,51 +219,67 @@ const Dashboard = () => {
       </div>
       <div className="border rounded-lg shadow-2xl p-5 my-10 bg-white">
         <h1 className="text-xl font-medium">Resent Orders</h1>
-        <div className="overflow-x-auto">
-          <table className="table ">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="text-black">Product</th>
-                <th className="text-black">Customer Info</th>
-                <th className="text-black">Price</th>
-                <th className="text-black">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              <tr>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  Zemlak, Daniel and Leannon
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                    Desktop Support Technician
-                  </span>
-                </td>
-                <td>120</td>
-                <th className=" w-[220px] min-w-[220px] space-x-3">
-                  <button className="btn bg-[#8FBC8F] text-white hover:bg-[#5fa55f]">Confirm</button>
-                  <button className="btn bg-[#FF5200] text-white hover:bg-[#ce4404]">Reject</button> 
-                </th>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          {orders?.data.length < 1 ? (
+            <div className="flex justify-center my-10">
+              <div className="my-5">
+                <h1 className="text-4xl font-semibold text-center my-2">
+                  No Data Found !
+                </h1>
+                <img
+                  className="w-[500px] mx-auto "
+                  src="https://i.ibb.co/74kjdxL/55024593-9264822.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="table ">
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th className="text-black">Product</th>
+                    <th className="text-black">Customer Info</th>
+                    <th className="text-black">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders?.data?.map((order :TCreateOrder) => (
+                    <tr>
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle h-12 w-12">
+                              <img
+                                src={order.products[0].id.images[0]}
+                                alt="Avatar Tailwind CSS Component"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">{order.products[0].id.name}</div>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="font-bold">{order.name}</span>
+                        <br />
+                        <span className="badge badge-ghost badge-sm">
+                        {order.districtName}, {order.subdistrict}, {order.address}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="font-semibold">Quantity: {order.products[0].quantity}</span> <br />
+                        <span className="font-medium">Price : {order.products[0].id.price}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>

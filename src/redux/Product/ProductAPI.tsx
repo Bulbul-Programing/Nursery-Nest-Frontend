@@ -53,6 +53,14 @@ const academicSemesterApi = baseApi.injectEndpoints({
           body : orderData
         }
       }
+    }),
+    getAllOrder : builder.query({
+      query : () => {
+        return {
+          url : '/order',
+          method: "GET"
+        }
+      }
     })
   }),
 });
@@ -62,5 +70,6 @@ export const {
   useProductCountQuery,
   useSingleProductQuery,
   useGetMultipleProductQuery,
-  useCreateOrderMutation
+  useCreateOrderMutation,
+  useGetAllOrderQuery
 } = academicSemesterApi;
