@@ -10,7 +10,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { TProduct } from "../shop/Products";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
-import { addToCart, deleteToCart, removeAllCarts } from "../../redux/fetures/addToCartSlice";
+import {
+  addToCart,
+  deleteToCart,
+  removeAllCarts,
+} from "../../redux/fetures/addToCartSlice";
 import { ImCross } from "react-icons/im";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
@@ -28,7 +32,7 @@ const Checkout = () => {
   const [cartItemsId, setCartItemsId] = useState([] as TSubDistrict);
   const { data, isLoading } = useGetMultipleProductQuery(cartItemsId);
   const dispatch = useAppDispatch();
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
   const [orderCreate] = useCreateOrderMutation();
 
   useEffect(() => {
@@ -117,10 +121,10 @@ const Checkout = () => {
           icon: "success",
           title: "Order create successfully!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
-        dispatch(removeAllCarts())
-        Navigate('/')
+        dispatch(removeAllCarts());
+        Navigate("/");
       }
     } catch (err: any) {
       console.log(err);
@@ -270,6 +274,14 @@ const Checkout = () => {
             className="px-4 w-full mt-1 mb-3 outline-none py-3 border-2 focus:border-[#8FBC8F] rounded-lg text-slate-500"
             name="address"
           ></textarea>
+          <input
+            type="checkbox"
+            id="cashOnDelivery"
+            checked
+            name="cashOnDelivery"
+            className="mb-6"
+          />
+          <label htmlFor="cashOnDelivery" className="text-lg font-medium ml-3">Cash On Delivery</label>
           {data?.data.length < 1 ? (
             <Link
               to="/shop"
