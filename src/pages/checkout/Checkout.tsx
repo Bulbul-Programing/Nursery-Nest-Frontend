@@ -124,7 +124,7 @@ const Checkout = () => {
           timer: 1500,
         });
         dispatch(removeAllCarts());
-        Navigate("/");
+        Navigate("/shop");
       }
     } catch (err: any) {
       console.log(err);

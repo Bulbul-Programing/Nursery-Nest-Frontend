@@ -24,49 +24,6 @@ interface CustomCSSProperties extends CSSProperties {
   "--thickness"?: string | number;
 }
 
-const data = [
-  {
-    name: "SAT",
-    order: 2400,
-  },
-  {
-    name: "SUM",
-    uv: 3000,
-    order: 1398,
-    amt: 2210,
-  },
-  {
-    name: "MON",
-    uv: 2000,
-    order: 2800,
-    amt: 2290,
-  },
-  {
-    name: "THU",
-    uv: 2780,
-    order: 3908,
-    amt: 2000,
-  },
-  {
-    name: "WED",
-    uv: 1890,
-    order: 4800,
-    amt: 2181,
-  },
-  {
-    name: "THS",
-    uv: 2390,
-    order: 3800,
-    amt: 2500,
-  },
-  {
-    name: "FRI",
-    uv: 3490,
-    order: 4300,
-    amt: 2100,
-  },
-];
-
 type TSevenOrderData = { _id: string; totalSales: number; count?: number };
 type TSevenVisitorData = { _id: string; totalVisitors: number; count?: number };
 
@@ -245,7 +202,7 @@ const Dashboard = () => {
               <p className="text-sm">Total Income</p>
               <p className=""> last 7 days</p>
             </div>
-            <p className="text-2xl font-semibold">${totalOrderPrice}</p>
+            <p className="text-2xl font-semibold">${(totalOrderPrice).toFixed(2)}</p>
           </div>
           <div className="w-2/3 md:w-8/12 lg:w-9/12">
             <ResponsiveContainer width="100%" height="100%">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Service from "./Service";
 import OurService from "../../pages/home/OurService";
+import ImagesSection from "../../pages/home/ImagesSection";
 const About = () => {
   return (
     <div>
@@ -33,7 +34,7 @@ const About = () => {
         </div>
       </div>
       <Service></Service>
-      
+      <ImagesSection></ImagesSection>
     </div>
   );
 };

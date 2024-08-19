@@ -38,7 +38,7 @@ const Order = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-medium"> Total order</h1>
+      <h1 className="text-3xl font-medium"> Total order : <span className="text-2xl font-semibold">{data?.data?.length}</span></h1>
       <div>
         <div className="overflow-x-auto">
           <table className="table ">

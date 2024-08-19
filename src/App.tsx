@@ -10,7 +10,7 @@ function App() {
     (state: RootState) => state.addToCart.products
   );
   const {data} = useTotalVisitorQuery(undefined)
-
+  console.log(data);
   useEffect(() => {
     if (cartItems.length > 1) {
       return;

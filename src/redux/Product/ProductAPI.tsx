@@ -56,6 +56,7 @@ const academicSemesterApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags:['product']
     }),
     singleProduct: builder.query({
       query: (priority) => {
