@@ -1,30 +1,61 @@
-# React + TypeScript + Vite
+# Nursery Nest
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Nursery Nest is an online nursery website built using modern web technologies. The project aims to provide an platform for users to explore various plants and gardening products. This README provides information on how to set up the project locally.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Running the Project Locally](#running-the-project-locally)
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A superset of JavaScript that adds static types.
+- **Redux Toolkit**: A set of tools for efficient Redux development.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **DaisyUI**: A component library for Tailwind CSS.
+- **Recharts**: A composable charting library built on React components.
+- **Vite**: A fast frontend build tool.
+- **Framer Motion**: A library for creating animations in React.
 
-- Configure the top-level `parserOptions` property like this:
+## Prerequisites
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+To run this project locally, you will need to have the following software installed on your machine:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
+
+## Getting Started
+
+Follow these steps to set up the project locally:
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/Bulbul-Programing/Nursery-Nest-Frontend.git
+    ```
+
+2. **Install dependencies:**
+
+    Using npm:
+    ```bash
+    npm install
+    ```
+
+    Or using Yarn:
+    ```bash
+    yarn install
+    ```
+
+## Running the Project Locally
+
+To run the project on your local machine, use the following command:
+
+```bash
+npm run dev
