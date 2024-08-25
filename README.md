@@ -2,6 +2,8 @@
 
 Nursery Nest is an online nursery website built using modern web technologies. The project aims to provide an platform for users to explore various plants and gardening products. This README provides information on how to set up the project locally.
 
+### live link : https://nursery-nest-frontend.vercel.app
+
 ## Table of Contents
 
 - [Technologies Used](#technologies-used)
