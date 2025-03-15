@@ -136,6 +136,7 @@ const Dashboard = () => {
       </div>
     );
   }
+  console.log(orders)
   return (
     <div>
       <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 ">
@@ -297,14 +298,14 @@ const Dashboard = () => {
                           <div className="avatar">
                             <div className="mask mask-squircle h-12 w-12">
                               <img
-                                src={order.products[0].id.images[0]}
+                                src={order?.products[0]?.id?.images[0]}
                                 alt="Avatar Tailwind CSS Component"
                               />
                             </div>
                           </div>
                           <div>
                             <div className="font-bold">
-                              {order.products[0].id.name}
+                              {order?.products[0]?.id?.name}
                             </div>
                           </div>
                         </div>
@@ -323,7 +324,7 @@ const Dashboard = () => {
                         </span>{" "}
                         <br />
                         <span className="font-medium">
-                          Price : {order.products[0].id.price}
+                          Price : {order.products[0]?.id?.price}
                         </span>
                       </td>
                     </tr>
